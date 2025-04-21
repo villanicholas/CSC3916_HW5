@@ -1,39 +1,94 @@
-# Assignment Five
-## Purpose
+# CSC3916_HW4 - Movie API with Reviews
 
-The purpose of this assignment is to create a React Single Page App over your developed API.  The interface will allow the users to search for movies, display information about the movie, see stored ratings, and allow the user to enter a rating.
+## Description
+This is a RESTful API for managing movies and their reviews. The API supports CRUD operations for movies and allows authenticated users to post reviews. It also includes Google Analytics integration for tracking review activities.
 
-## Pre-Requirements
-- Assignment 3 deployed REACT app that supports SignUp and Logon
-- Assignment 4 that supports reviews
+## Features
+- User authentication using JWT
+- Movie management (CRUD operations)
+- Movie reviews with ratings
+- Review aggregation with movies
+- Google Analytics integration for tracking review activities
 
-## Requirements
-- Update your API to support storing an image (or image URL) for the movies you have stored.  You will use the image URL in your React application to show the image of movies
-    - New Attribute on the movie collection
-- For this assignment all your endpoints should be protected by JWT authentication
-- Implement the following interfaces
-    - User SignUp and User Logon
-        - Leverage your User mongoDB collection to store new users of the application
-    - Main screen should show the top rated movies (show at least 5)
-        - Your GET /movies endpoint should sort by rating (server side)
-            - Update your /movies (with reviews=true) endpoint to sort by average rating descending
-    - Movie Detail screen, shows the Movie, Image, Actors that were in the movie, aggregated rating for the movie and grid that shows the reviews (username, rating, review)
-    - Extra Credit: (7 points) - chapter 25 of (https://www.amazon.com/dp/B0979MGJ5J?_encoding=UTF8&psc=1&ref_=cm_sw_r_cp_ud_dp_M9YGPJNZWB3BK0P59QX3) Movie Search – show results in a grid, accordion or other list control
-        - Add Search API (HTTP POST) to the API that can take partial movie names or partial actor names
+## Installation
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
+3. Create a `.env` file with the following variables:
+```
+DB=<your_mongodb_connection_string>
+SECRET_KEY=<your_jwt_secret>
+GA_KEY=<your_google_analytics_tracking_id>
+```
 
-## Submissions
-- User is able to Sign-up (name, username, password)
-- User is able to Logon to the application (username, password)
-- User is able to see list of movies and select a movie to see the detail screen (top rated movies displayed)
-- User is able to enter a review on the detail page (enter a rating and comment) – the logged in user’s username will be associated with the review (as captured from the JSON Web Token)
+## API Endpoints
 
-## Rubic
-- -3 Not able to add comments
-- -2 Not aggregating rating (average rating)
-- -3 if not pointed to correct end point (e.g Hw4 endpoint)
-- -5 if you don’t have a react web site deployed 
+### Authentication
+- POST `/signup` - Create a new user account
+- POST `/signin` - Sign in and receive JWT token
 
-## Resources
-- https://github.com/facebook/create-react-app
-- https://github.com/mars/create-react-app-buildpack#user-content-requires
+### Movies
+- GET `/movies` - Get all movies
+- GET `/movies?reviews=true` - Get all movies with their reviews
+- GET `/movies/:id` - Get a specific movie
+- GET `/movies/:id?reviews=true` - Get a specific movie with its reviews
+- POST `/movies` - Create a new movie (requires authentication)
 
+### Reviews
+- POST `/reviews` - Create a new review (requires authentication)
+  - Required fields:
+    - movieId: ID of the movie being reviewed
+    - review: Text review
+    - rating: Number between 0 and 5
+
+## Movie Schema
+```javascript
+{
+    title: String (required),
+    year: Number (required),
+    genre: String (required),
+    actors: [String] (required),
+    imageUrl: String
+}
+```
+
+## Review Schema
+```javascript
+{
+    movieId: ObjectId (required, references Movie),
+    username: String (required),
+    review: String (required),
+    rating: Number (required, 0-5),
+    createdAt: Date,
+    updatedAt: Date
+}
+```
+
+## Analytics
+The API integrates with Google Analytics to track movie review activities:
+- Custom Dimension: Movie Name
+- Custom Metric: Review Count
+- Event tracking for each review submission
+
+## Testing
+Run the test suite:
+```bash
+npm test
+```
+
+## Deployment
+The API can be deployed to Heroku or any other platform that supports Node.js applications.
+
+## Environment Variables
+- `DB`: MongoDB connection string
+- `SECRET_KEY`: JWT secret key
+- `GA_KEY`: Google Analytics tracking ID
+- `PORT`: Server port (defaults to 8080)
+
+## Postman Collection
+Import the [Postman Collection](link-to-your-postman-collection) to test the API endpoints.
+
+## License
+MIT
