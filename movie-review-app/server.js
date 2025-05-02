@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './src/config/db.js';
-import User from './src/models/User.js';
-import Movie from './src/models/Movie.js';
-import Review from './src/models/Review.js';
+import { connectDB } from './src/config/db.js';
+import { User } from './src/models/User.js';
+import { Movie } from './src/models/Movie.js';
+import { Review } from './src/models/Review.js';
 import jwt from 'jsonwebtoken';
 
 dotenv.config();

@@ -9,23 +9,24 @@ import {
   Typography,
   Box,
   Alert,
-  Link,
 } from '@mui/material';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await login(username, password);
+    setError('');
+
+    const result = await login(username, password);
+    if (result.success) {
       navigate('/');
-    } catch (error) {
-      setError('Invalid username or password');
+    } else {
+      setError(result.message);
     }
   };
 
