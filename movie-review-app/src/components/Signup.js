@@ -12,22 +12,20 @@ import {
 } from '@mui/material';
 
 const Signup = () => {
-  const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
   const { signup } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-
-    const result = await signup(name, username, password);
-    if (result.success) {
-      navigate('/login');
-    } else {
-      setError(result.message);
+    try {
+      await signup(username, password, name);
+      navigate('/');
+    } catch (error) {
+      setError('Failed to create account');
     }
   };
 

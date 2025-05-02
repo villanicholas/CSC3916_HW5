@@ -27,10 +27,6 @@ const MovieDetail = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  useEffect(() => {
-    fetchMovieDetails();
-  }, [id]);
-
   const fetchMovieDetails = async () => {
     try {
       const response = await axios.get(`${config.ENDPOINTS.MOVIE_DETAIL(id)}?reviews=true`);
@@ -41,6 +37,10 @@ const MovieDetail = () => {
       setError('Failed to fetch movie details');
     }
   };
+
+  useEffect(() => {
+    fetchMovieDetails();
+  }, [id, fetchMovieDetails]);
 
   const handleSubmitReview = async () => {
     try {

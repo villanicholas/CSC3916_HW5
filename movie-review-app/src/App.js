@@ -22,7 +22,7 @@ const theme = createTheme({
 });
 
 // Protected Route component
-const ProtectedRoute = ({ children }) => {
+const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
@@ -40,17 +40,17 @@ function App() {
             <Route
               path="/"
               element={
-                <ProtectedRoute>
+                <PrivateRoute>
                   <MovieList />
-                </ProtectedRoute>
+                </PrivateRoute>
               }
             />
             <Route
               path="/movie/:id"
               element={
-                <ProtectedRoute>
+                <PrivateRoute>
                   <MovieDetail />
-                </ProtectedRoute>
+                </PrivateRoute>
               }
             />
           </Routes>
