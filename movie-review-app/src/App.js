@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import Navbar from './components/Navbar';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import MovieList from './components/MovieList';
-import MovieDetail from './components/MovieDetail';
+import { AuthProvider, useAuth } from './contexts/AuthContext.js';
+import Navbar from './components/Navbar.js';
+import Login from './components/Login.js';
+import Signup from './components/Signup.js';
+import MovieList from './components/MovieList.js';
+import MovieDetail from './components/MovieDetail.js';
 
 const theme = createTheme({
   palette: {
